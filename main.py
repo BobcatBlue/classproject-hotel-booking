@@ -1,6 +1,6 @@
 import pandas as pd
 
-df = pd.read_csv("hotels.csv", sep=",")
+df = pd.read_csv("hotels.csv", dtype={"id": str})
 
 
 class Hotel:
@@ -9,9 +9,12 @@ class Hotel:
         pass
 
     def book(self):
-        pass
+        """Books a hotel by changing its availability to 'no' """
+        df.loc[df["id"] == self.hotel_id, "available"] = "no"
+        df.to_csv("hotels.csv", index=False)
 
     def available(self):
+        """Checks if a room at the hotel is available"""
         availability = df.loc[df["id"] == self.hotel_id, "available"].squeeze()
         if availability == "yes":
             return True
